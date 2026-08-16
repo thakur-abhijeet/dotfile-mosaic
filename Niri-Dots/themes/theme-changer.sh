@@ -30,11 +30,17 @@ echo "Theme changed to $SELECTED_THEME"
 # 3. Handle apps that don't support symlinks/imports well
 # Starship (merge base + theme)
 if [ -f "$HOME/.config/starship.base.toml" ]; then
+    if [ -L "$HOME/.config/starship.toml" ]; then
+        rm -f "$HOME/.config/starship.toml"
+    fi
     cat "$HOME/.config/starship.base.toml" "$ACTIVE_LINK/starship.toml" > "$HOME/.config/starship.toml"
 fi
 
 # Fuzzel (merge base + theme)
 if [ -f "$HOME/.config/fuzzel/fuzzel.base.ini" ]; then
+    if [ -L "$HOME/.config/fuzzel/fuzzel.ini" ]; then
+        rm -f "$HOME/.config/fuzzel/fuzzel.ini"
+    fi
     cat "$HOME/.config/fuzzel/fuzzel.base.ini" "$ACTIVE_LINK/fuzzel.ini" > "$HOME/.config/fuzzel/fuzzel.ini"
 fi
 

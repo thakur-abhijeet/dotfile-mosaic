@@ -152,6 +152,12 @@ deploy_hyprland() {
             deploy_item "$item" "$CONFIG_DIR/wallis/$base" "$method"
         done
     fi
+
+    # Initialize default theme (Tokyo Night)
+    if [ -f "$LOCAL_BIN/switch-theme" ]; then
+        info "Initializing default Hyprland theme: Tokyo Night..."
+        bash "$LOCAL_BIN/switch-theme" "Tokyo Night" || warn "Could not initialize theme. Theme assets might be missing."
+    fi
 }
 
 deploy_niri() {
@@ -192,6 +198,12 @@ deploy_niri() {
     # Ensure executable permissions on Niri scripts and themes
     find "$CONFIG_DIR/niri/scripts" -type f -exec chmod +x {} + 2>/dev/null || true
     find "$CONFIG_DIR/themes" -name "*.sh" -exec chmod +x {} + 2>/dev/null || true
+
+    # Initialize default theme (Tokyo Night)
+    if [ -f "$CONFIG_DIR/themes/theme-changer.sh" ]; then
+        info "Initializing default Niri theme: Tokyo Night..."
+        bash "$CONFIG_DIR/themes/theme-changer.sh" "Tokyo Night" || warn "Could not initialize theme. Theme assets might be missing."
+    fi
 }
 
 # -----------------------------

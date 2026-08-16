@@ -54,11 +54,11 @@
       "actions": [
         {
           "label": "",
-          "command": "ghostty --class=impala -e /home/abhijeet.thakur@infodevelopers.local/.cargo/bin/impala"
+          "command": "ghostty --class=impala -e ~/.cargo/bin/impala"
         },
         {
           "label": "󰂯",
-          "command": "ghostty --class=bluetui -e /home/abhijeet.thakur@infodevelopers.local/.cargo/bin/bluetui"
+          "command": "ghostty --class=bluetui -e ~/.cargo/bin/bluetui"
         },
         {
           "label": "󰕾",
@@ -66,7 +66,7 @@
         },
         {
           "label": "",
-          "command": "bash /home/abhijeet.thakur@infodevelopers.local/.config/themes/theme-selector.sh"
+          "command": "bash ~/.config/themes/theme-selector.sh"
         },
         {
           "label": "󰻠",

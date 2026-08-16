@@ -49,10 +49,14 @@ symlink_file "$THEME_DIR/neovim.lua" "$HOME/.config/nvim/lua/plugins/theme.lua"
 
 # ────────────── Noctalia ──────────────
 NOCTALIA_ASSETS="$HOME/.config/noctalia/colorschemes"
-matches=($(find "$NOCTALIA_ASSETS" -maxdepth 1 -type d -iname "$THEME_NAME*" -printf "%f\n"))
+matches=()
+if [[ -d "$NOCTALIA_ASSETS" ]]; then
+  matches=($(find "$NOCTALIA_ASSETS" -maxdepth 1 -type d -iname "$THEME_NAME*" -printf "%f\n" || true))
+fi
 
+THEME_FOLDER=""
 if [[ ${#matches[@]} -eq 0 ]]; then
-  echo "Noctalia theme matching '$THEME_NAME' found!"
+  echo "No Noctalia theme matching '$THEME_NAME' found."
 elif [[ ${#matches[@]} -eq 1 ]]; then
   THEME_FOLDER="${matches[0]}"
 else
@@ -61,9 +65,8 @@ else
     echo "[$i] ${matches[$i]}"
   done
   read -p "Select a theme number: " sel
-  if [[ -z "${matches[$sel]}" ]]; then
+  if [[ -z "${sel:-}" ]] || [[ ! "$sel" =~ ^[0-9]+$ ]] || (( sel >= ${#matches[@]} )); then
     echo "Invalid selection. Skipping Noctalia theme."
-    THEME_FOLDER=""
   else
     THEME_FOLDER="${matches[$sel]}"
   fi

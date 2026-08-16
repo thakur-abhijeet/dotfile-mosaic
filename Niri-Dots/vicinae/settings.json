@@ -28,7 +28,7 @@
    "providers": {
       "@sovereign/store.vicinae.awww-switcher": {
          "preferences": {
-            "wallpaperPath": "/home/abhijeet.thakur@infodevelopers.local/Pictures/wallis"
+            "wallpaperPath": "~/.config/wallis"
          }
       },
       "applications": {
