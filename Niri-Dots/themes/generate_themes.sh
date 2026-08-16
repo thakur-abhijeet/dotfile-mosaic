@@ -3,7 +3,7 @@
 # Centralized colors for themes from theme_example_list.txt
 # This script generates the app-specific configs for each theme.
 
-THEMES_DIR="$HOME/.config/themes"
+THEMES_DIR="${THEMES_DIR:-$HOME/.config/themes}"
 
 generate_theme() {
     local name="$1"
@@ -318,3 +318,24 @@ generate_theme "Oasis" "#000000" "#FAF7F0" "#000000" "#666666" "#D06666" "#FFA0A
 
 # FluidGlass (Approximate from description)
 generate_theme "FluidGlass" "#0F0F14" "#F8FAFC" "#1E293B" "#64748B" "#EF4444" "#EF4444" "#10B981" "#10B981" "#F59E0B" "#F59E0B" "#0EA5E9" "#0EA5E9" "#8B5CF6" "#8B5CF6" "#06B6D4" "#06B6D4" "#475569" "#F8FAFC"
+
+# --- Omarchy Default Themes (Auto-Generated) ---
+generate_theme "Tokyo Night" "#1a1b26" "#a9b1d6" "#32344a" "#444b6a" "#f7768e" "#ff7a93" "#9ece6a" "#b9f27c" "#e0af68" "#ff9e64" "#7aa2f7" "#7da6ff" "#ad8ee6" "#bb9af7" "#449dab" "#0db9d7" "#787c99" "#acb0d0"
+generate_theme "Catppuccin" "#1e1e2e" "#cdd6f4" "#45475a" "#585b70" "#f38ba8" "#f38ba8" "#a6e3a1" "#a6e3a1" "#f9e2af" "#f9e2af" "#89b4fa" "#89b4fa" "#f5c2e7" "#f5c2e7" "#94e2d5" "#94e2d5" "#bac2de" "#a6adc8"
+generate_theme "Lumon" "#16242d" "#d6e2ee" "#1b2d40" "#304860" "#4d86b0" "#73a6cb" "#5e95bc" "#86b7d8" "#6fa4c9" "#9dcae5" "#6fb8e3" "#f2fcff" "#8bc9eb" "#b1d8ee" "#b4e4f6" "#d1eef8" "#d6e2ee" "#ffffff"
+generate_theme "Ethereal" "#060B1E" "#ffcead" "#3C486D" "#6d7db6" "#ED5B5A" "#faaaa9" "#92a593" "#c4cfc4" "#E9BB4F" "#f7dc9c" "#7d82d9" "#c2c4f0" "#c89dc1" "#ead7e7" "#a3bfd1" "#dfeaf0" "#F99957" "#ffcead"
+generate_theme "Everforest" "#2d353b" "#d3c6aa" "#475258" "#475258" "#e67e80" "#e67e80" "#a7c080" "#a7c080" "#dbbc7f" "#dbbc7f" "#7fbbb3" "#7fbbb3" "#d699b6" "#d699b6" "#83c092" "#83c092" "#d3c6aa" "#d3c6aa"
+generate_theme "Gruvbox" "#282828" "#d4be98" "#3c3836" "#3c3836" "#ea6962" "#ea6962" "#a9b665" "#a9b665" "#d8a657" "#d8a657" "#7daea3" "#7daea3" "#d3869b" "#d3869b" "#89b482" "#89b482" "#d4be98" "#d4be98"
+generate_theme "Miasma" "#222222" "#c2c2b0" "#000000" "#666666" "#685742" "#685742" "#5f875f" "#5f875f" "#b36d43" "#b36d43" "#78824b" "#78824b" "#bb7744" "#bb7744" "#c9a554" "#c9a554" "#d7c483" "#d7c483"
+generate_theme "Hackerman" "#0B0C16" "#ddf7ff" "#3E4058" "#6a6e95" "#50f872" "#85ff9d" "#4fe88f" "#9cf7c2" "#50f7d4" "#a4ffec" "#829dd4" "#c4d2ed" "#86a7df" "#cddbf4" "#7cf8f7" "#d1fffe" "#85E1FB" "#ddf7ff"
+generate_theme "Osaka Jade" "#111c18" "#C1C497" "#23372B" "#53685B" "#FF5345" "#db9f9c" "#549e6a" "#63b07a" "#459451" "#E5C736" "#509475" "#ACD4CF" "#D2689C" "#75bbb3" "#2DD5B7" "#8CD3CB" "#F6F5DD" "#9eebb3"
+generate_theme "Kanagawa" "#1f1f28" "#dcd7ba" "#090618" "#727169" "#c34043" "#e82424" "#76946a" "#98bb6c" "#c0a36e" "#e6c384" "#7e9cd8" "#7fb4ca" "#957fb8" "#938aa9" "#6a9589" "#7aa89f" "#c8c093" "#dcd7ba"
+generate_theme "Nord" "#2e3440" "#d8dee9" "#3b4252" "#4c566a" "#bf616a" "#bf616a" "#a3be8c" "#a3be8c" "#ebcb8b" "#ebcb8b" "#81a1c1" "#81a1c1" "#b48ead" "#b48ead" "#88c0d0" "#8fbcbb" "#e5e9f0" "#eceff4"
+generate_theme "Matte Black" "#121212" "#bebebe" "#333333" "#8a8a8d" "#D35F5F" "#B91C1C" "#FFC107" "#FFC107" "#b91c1c" "#b90a0a" "#e68e0d" "#f59e0b" "#D35F5F" "#B91C1C" "#bebebe" "#eaeaea" "#bebebe" "#ffffff"
+generate_theme "Vantablack" "#000000" "#ffffff" "#404040" "#5c5c5c" "#a4a4a4" "#a4a4a4" "#b6b6b6" "#b6b6b6" "#cecece" "#cecece" "#8d8d8d" "#8d8d8d" "#9b9b9b" "#9b9b9b" "#b0b0b0" "#b0b0b0" "#ececec" "#ffffff"
+generate_theme "Ristretto" "#2c2525" "#e6d9db" "#72696a" "#948a8b" "#fd6883" "#ff8297" "#adda78" "#c8e292" "#f9cc6c" "#fcd675" "#f38d70" "#f8a788" "#a8a9eb" "#bebffd" "#85dacc" "#9bf1e1" "#e6d9db" "#f1e5e7"
+generate_theme "Retro 82" "#05182e" "#f6dcac" "#303442" "#134e5a" "#f85525" "#f85525" "#028391" "#028391" "#e97b3c" "#e97b3c" "#faa968" "#faa968" "#3f8f8a" "#3f8f8a" "#8cbfb8" "#8cbfb8" "#a7c9c6" "#f6dcac"
+generate_theme "Flexoki Light" "#FFFCF0" "#100F0F" "#DAD8CE" "#100F0F" "#D14D41" "#D14D41" "#879A39" "#879A39" "#D0A215" "#D0A215" "#205EA6" "#4385BE" "#CE5D97" "#CE5D97" "#3AA99F" "#3AA99F" "#B7B5AC" "#CECDC3"
+generate_theme "Rose Pine" "#faf4ed" "#575279" "#f2e9e1" "#9893a5" "#b4637a" "#b4637a" "#286983" "#286983" "#ea9d34" "#ea9d34" "#56949f" "#56949f" "#907aa9" "#907aa9" "#d7827e" "#d7827e" "#575279" "#575279"
+generate_theme "Catppuccin Latte" "#eff1f5" "#4c4f69" "#bcc0cc" "#acb0be" "#d20f39" "#d20f39" "#40a02b" "#40a02b" "#df8e1d" "#df8e1d" "#1e66f5" "#1e66f5" "#ea76cb" "#ea76cb" "#179299" "#179299" "#5c5f77" "#6c6f85"
+generate_theme "White" "#ffffff" "#000000" "#c0c0c0" "#c0c0c0" "#2a2a2a" "#2a2a2a" "#3a3a3a" "#3a3a3a" "#4a4a4a" "#4a4a4a" "#1a1a1a" "#1a1a1a" "#2e2e2e" "#2e2e2e" "#3e3e3e" "#3e3e3e" "#000000" "#000000"

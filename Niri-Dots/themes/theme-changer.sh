@@ -7,18 +7,17 @@
 THEMES_DIR="$HOME/.config/themes"
 ACTIVE_LINK="$THEMES_DIR/active"
 
-# 1. Get list of themes
-themes=($(ls -d $THEMES_DIR/*/ | xargs -n 1 basename | grep -v "active"))
-
-if [ -z "$1" ]; then
+# 1. Validate input
+if [ -z "${1:-}" ]; then
     echo "Usage: theme-changer <theme_name>"
-    echo "Available themes: ${themes[@]}"
+    echo "Available themes:"
+    find "$THEMES_DIR" -maxdepth 1 -mindepth 1 -type d ! -name "active" -exec basename {} \;
     exit 1
 fi
 
 SELECTED_THEME="$1"
 
-if [[ ! " ${themes[@]} " =~ " ${SELECTED_THEME} " ]]; then
+if [ ! -d "$THEMES_DIR/$SELECTED_THEME" ] || [ "$SELECTED_THEME" = "active" ]; then
     echo "Error: Theme '$SELECTED_THEME' not found."
     exit 1
 fi
@@ -54,17 +53,17 @@ pkill -USR2 waybar || true
 command -v swaync-client >/dev/null && swaync-client -rs || true
 
 # Alacritty (auto-reloads)
-touch "/home/abhijeet.thakur@infodevelopers.local/.config/alacritty/alacritty.toml"
+touch "$HOME/.config/alacritty/alacritty.toml"
 
 # Ghostty
-touch "/home/abhijeet.thakur@infodevelopers.local/.config/ghostty/config"
+touch "$HOME/.config/ghostty/config"
 
 # Tmux
-tmux source-file "/home/abhijeet.thakur@infodevelopers.local/.config/tmux/tmux.conf" 2>/dev/null || true
+tmux source-file "$HOME/.config/tmux/tmux.conf" 2>/dev/null || true
 
 # Niri
 # Niri auto-reloads when config is touched
-touch "/home/abhijeet.thakur@infodevelopers.local/.config/niri/config.kdl"
-touch "/home/abhijeet.thakur@infodevelopers.local/.config/niri/configs/custom.kdl"
+touch "$HOME/.config/niri/config.kdl"
+touch "$HOME/.config/niri/configs/custom.kdl"
 
 echo "Apps reloaded."

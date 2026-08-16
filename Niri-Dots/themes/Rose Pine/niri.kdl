@@ -1,0 +1,10 @@
+layout {
+    focus-ring {
+        active-color "#56949f"
+        inactive-color "#f2e9e1"
+    }
+    border {
+        active-color "#56949f"
+        inactive-color "#f2e9e1"
+    }
+}
