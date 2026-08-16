@@ -50,6 +50,45 @@ ln -sfn "$ACTIVE_LINK/neofetch.conf" "$HOME/.config/neofetch/colors.conf"
 # Alacritty (update theme.toml symlink)
 ln -sfn "$ACTIVE_LINK/alacritty.toml" "$HOME/.config/alacritty/theme.toml"
 
+# Ghostty (update theme.conf symlink)
+if [ -d "$HOME/.config/ghostty" ]; then
+    ln -sfn "$ACTIVE_LINK/ghostty.conf" "$HOME/.config/ghostty/theme.conf"
+fi
+
+# Niri Theme (update theme.kdl symlink)
+if [ -d "$HOME/.config/niri/configs" ]; then
+    ln -sfn "$ACTIVE_LINK/niri.kdl" "$HOME/.config/niri/configs/theme.kdl"
+fi
+
+# Waybar (update colors.css symlink)
+if [ -d "$HOME/.config/waybar" ]; then
+    ln -sfn "$ACTIVE_LINK/waybar.css" "$HOME/.config/waybar/colors.css"
+fi
+
+# SwayNC (update colors.css symlink)
+if [ -d "$HOME/.config/swaync" ]; then
+    ln -sfn "$ACTIVE_LINK/swaync.css" "$HOME/.config/swaync/colors.css"
+fi
+
+# Ranger (update custom.py symlink)
+if [ -d "$HOME/.config/ranger/colorschemes" ]; then
+    ln -sfn "$ACTIVE_LINK/ranger.py" "$HOME/.config/ranger/colorschemes/custom.py"
+fi
+
+# Fish (update theme symlink)
+if [ -d "$HOME/.config/fish/themes" ]; then
+    ln -sfn "$ACTIVE_LINK/fish.theme" "$HOME/.config/fish/themes/theme"
+fi
+
+# Neovim (update theme symlink)
+if [ -d "$HOME/.config/nvim/lua/plugins" ]; then
+    ln -sfn "$ACTIVE_LINK/nvim.lua" "$HOME/.config/nvim/lua/plugins/theme.lua"
+fi
+
+# Tmux Theme (update theme.conf symlink)
+if [ -d "$HOME/.config/tmux" ]; then
+    ln -sfn "$ACTIVE_LINK/tmux.conf" "$HOME/.config/tmux/theme.conf"
+fi
 
 # 4. Reload apps
 # Waybar
