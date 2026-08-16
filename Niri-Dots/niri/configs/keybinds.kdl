@@ -55,8 +55,8 @@ binds {
     // Application Launchers
     // ═══════════════════════════════════════
 
-    // Terminal (Ghostty)
-    Super+Return { spawn "ghostty"; }
+    // Terminal (Kitty)
+    Super+Return { spawn "kitty"; }
 
     // Web browser (Firefox)
     Super+B { spawn "firefox"; }
