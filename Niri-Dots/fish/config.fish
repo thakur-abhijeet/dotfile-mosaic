@@ -90,9 +90,9 @@ set -gx HISTFILE "$XDG_STATE_HOME/history"
 # =============================================================================
 # Load active theme colors from ~/.config/fish/themes/theme if it exists
 if test -f ~/.config/fish/themes/theme
-    while read -la line
-        if not string match -q -r '^\s*#' $line; and test -n (string trim $line)
-            set -l parts (string split -m 1 ' ' $line)
+    while read -l line
+        if not string match -q -r '^\s*#' -- "$line"; and test -n (string trim -- "$line")
+            set -l parts (string split -m 1 ' ' -- "$line")
             if test (count $parts) -eq 2
                 set -g $parts[1] $parts[2]
             end
