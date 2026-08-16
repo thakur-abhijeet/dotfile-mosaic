@@ -55,6 +55,21 @@ if [ -d "$HOME/.config/ghostty" ]; then
     ln -sfn "$ACTIVE_LINK/ghostty.conf" "$HOME/.config/ghostty/theme.conf"
 fi
 
+# Kitty Theme (generate theme.conf from ghostty.conf)
+if [ -d "$HOME/.config/kitty" ] && [ -f "$ACTIVE_LINK/ghostty.conf" ]; then
+    sed -E '
+        s/^foreground\s*=\s*(.*)/foreground \1/
+        s/^background\s*=\s*(.*)/background \1/
+        s/^selection-background\s*=\s*(.*)/selection_background \1/
+        s/^selection-foreground\s*=\s*(.*)/selection_foreground \1/
+        s/^cursor-color\s*=\s*(.*)/cursor \1/
+        s/^palette\s*=\s*([0-9]+)\s*=\s*(.*)/color\1 \2/
+    ' "$ACTIVE_LINK/ghostty.conf" > "$HOME/.config/kitty/theme.conf"
+    if command -v kitty >/dev/null; then
+        kitty @ set-colors --all "$HOME/.config/kitty/theme.conf" 2>/dev/null || true
+    fi
+fi
+
 # Niri Theme (update theme.kdl symlink)
 if [ -d "$HOME/.config/niri/configs" ]; then
     ln -sfn "$ACTIVE_LINK/niri.kdl" "$HOME/.config/niri/configs/theme.kdl"
