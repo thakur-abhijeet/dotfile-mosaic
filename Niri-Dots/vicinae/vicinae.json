@@ -1,0 +1,39 @@
+{
+  "closeOnFocusLoss": true,
+  "considerPreedit": false,
+  "faviconService": "twenty",
+
+  "font": {
+    "normal": "JetBrainsMono Nerd Font",
+    "size": 12
+  },
+
+  "keybinding": "default",
+  "keybinds": {
+    "toggle":         "Super+Space",
+    "clipboard":      "Super+V",
+    "close":          "Escape",
+    "open":           "Return",
+    "selectNext":     "ctrl+n",
+    "selectPrev":     "ctrl+p",
+    "remove":         "ctrl+d"
+  },
+
+  "popToRootOnClose": true,
+
+  "rootSearch": {
+    "searchFiles": false
+  },
+
+  "theme": {
+    "name": "vicinae-dark"
+  },
+
+  "window": {
+    "csd":     false,
+    "opacity": 0.92,
+    "rounding": 12,
+    "width":   680,
+    "maxHeight": 480
+  }
+}

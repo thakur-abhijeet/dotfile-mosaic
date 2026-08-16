@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+ACTION=$(printf "Start\nStop\nRestart\nLogs\nExec Shell\nRemove\n" \
+  | fuzzel --dmenu --prompt="Docker Action ❯ ")
+
+[ -z "$ACTION" ] && exit 0
+
+CONTAINER=$(docker ps -a --format '{{.Names}} ({{.Status}})' \
+  | fuzzel --dmenu --prompt="Container ❯ ")
+
+[ -z "$CONTAINER" ] && exit 0
+
+NAME=$(echo "$CONTAINER" | awk '{print $1}')
+
+case "$ACTION" in
+  Start)
+    docker start "$NAME"
+    ;;
+  Stop)
+    docker stop "$NAME"
+    ;;
+  Restart)
+    docker restart "$NAME"
+    ;;
+  Logs)
+    alacritty -e docker logs -f "$NAME"
+    ;;
+  "Exec Shell")
+    alacritty -e docker exec -it "$NAME" /bin/sh
+    ;;
+  Remove)
+    docker rm -f "$NAME"
+    ;;
+esac

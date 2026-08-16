@@ -1,0 +1,53 @@
+// ╔══════════════════════════════════════════╗
+// ║         Niri — animations.kdl            ║
+// ║         Abhijeet · Ubuntu + Niri         ║
+// ╚══════════════════════════════════════════╝
+// Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Animations
+//
+// Spring physics reference:
+//   stiffness    → speed (higher = faster)
+//   damping-ratio < 1.0 → bouncy | = 1.0 → no bounce | > 1.0 → overdamped
+//   epsilon      → threshold to stop animation (smaller = more precise)
+
+animations {
+
+    // ═══════════════════════════════════════
+    // Window — Open / Close
+    // Snappy landing with almost no bounce
+    // ═══════════════════════════════════════
+    window-open {
+        spring stiffness=10000 damping-ratio=1.0 epsilon=0.0001
+    }
+
+    window-close {
+        spring stiffness=10000 damping-ratio=1.0 epsilon=0.0001
+    }
+
+    // ═══════════════════════════════════════
+    // Window — Move / Resize
+    // Critically damped — zero oscillation for maximum precision
+    // ═══════════════════════════════════════
+    window-movement {
+        spring stiffness=10000 damping-ratio=1.0 epsilon=0.0001
+    }
+
+    window-resize {
+        spring stiffness=10000 damping-ratio=1.0 epsilon=0.0001
+    }
+
+    // ═══════════════════════════════════════
+    // View — Horizontal Scroll
+    // Natural feeling for workspace/column shifts
+    // ═══════════════════════════════════════
+    horizontal-view-movement {
+        spring stiffness=10000 damping-ratio=1.0 epsilon=0.0001
+    }
+
+    // ═══════════════════════════════════════
+    // Workspace Switch
+    // Weighty but smooth
+    // ═══════════════════════════════════════
+    workspace-switch {
+        spring stiffness=10000 damping-ratio=1.0 epsilon=0.0001
+    }
+}

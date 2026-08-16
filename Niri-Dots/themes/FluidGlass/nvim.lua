@@ -1,0 +1,18 @@
+return {
+    base00 = "#0F0F14",
+    base01 = "#1E293B",
+    base02 = "#404040",
+    base03 = "#4d4d4d",
+    base04 = "#475569",
+    base05 = "#F8FAFC",
+    base06 = "#475569",
+    base07 = "#F8FAFC",
+    base08 = "#EF4444",
+    base09 = "#EF4444",
+    base0A = "#F59E0B",
+    base0B = "#10B981",
+    base0C = "#06B6D4",
+    base0D = "#0EA5E9",
+    base0E = "#8B5CF6",
+    base0F = "#8B5CF6",
+}

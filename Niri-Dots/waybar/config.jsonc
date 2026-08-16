@@ -1,0 +1,339 @@
+// ╔══════════════════════════════════════════════╗
+// ║  Waybar · config.jsonc                       ║
+// ║  Abhijeet · TokyoNight Night · Niri          ║
+// ║  Style: Pill Islands · Icons + Numbers       ║
+// ╚══════════════════════════════════════════════╝
+{
+  "layer": "top",
+  "position": "top",
+  "margin-top": 8,
+  "margin-left": 14,
+  "margin-right": 14,
+  "margin-bottom": 0,
+  "reload_style_on_change": true,
+  // ── Layout ──────────────────────────────────────────────────────────────
+  "modules-left": [
+    "custom/launcher",
+    "niri/workspaces"
+  ],
+  "modules-center": [
+    "niri/window"
+  ],
+  "modules-right": [
+    "group/sys",
+    "group/media",
+    "group/utility",
+    "group/misc",
+    "group/weather"
+  ],
+  // ── Groups ──────────────────────────────────────────────────────────────
+  "group/sys": {
+    "orientation": "horizontal",
+    "modules": [
+      "cpu",
+      "memory",
+      "disk",
+      "temperature",
+      "battery"
+    ]
+  },
+  "group/media": {
+    "orientation": "horizontal",
+    "modules": [
+      "mpris",
+      "backlight",
+      "pulseaudio"
+    ]
+  },
+  // ── DUPLICATE FIX ───────────────────────────────────────────────────────
+  // nm-applet and blueman-applet were spawned in execs.kdl (lines 36 & 39)
+  // AND running as systemd user services. Both injected tray icons that
+  // duplicated the dedicated network/bluetooth modules below.
+  //
+  // Already fixed by:
+  //   1. Commenting them out in ~/.config/niri/configs/execs.kdl
+  //   2. systemctl --user stop/disable app-blueman@autostart.service
+  //   3. systemctl --user stop/disable app-nm-applet@autostart.service
+  //
+  // The dedicated modules below are the source of truth. No applets needed.
+  "group/utility": {
+    "orientation": "horizontal",
+    "modules": [
+      "idle_inhibitor",
+      "network",
+      "bluetooth",
+      "tray"
+    ]
+  },
+  "group/misc": {
+    "orientation": "horizontal",
+    "modules": [
+      "clock",
+      "custom/notification",
+      "custom/power"
+    ]
+  },
+  "group/weather": {
+    "orientation": "horizontal",
+    "modules": [
+      "custom/weather"
+    ]
+  },
+  // ── Launcher ────────────────────────────────────────────────────────────
+  "custom/launcher": {
+    "format": "󱄅",
+    "tooltip-format": "Open Launcher",
+    "on-click": "fuzzel",
+    "on-click-right": "fuzzel"
+  },
+  // ── Workspaces ──────────────────────────────────────────────────────────
+  "niri/workspaces": {
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "active": "󰮯",
+      "default": "󰊠",
+      "urgent": "󰀨"
+    },
+    "all-outputs": false,
+    "disable-scroll": false,
+    "active-only": false,
+    "display-condition": "only-populated"
+  },
+  "niri/window": {
+    "format": "",
+    "icon": true,
+    "icon-size": 14
+  },
+  // ── Clock ────────────────────────────────────────────────────────────────
+  "clock": {
+    "format": "󰥔 {:%H:%M}",
+    "format-alt": "󰃭 {:%a %d %b}",
+    "tooltip-format": "<big>{:%A, %d %B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+    "interval": 60,
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#7aa2f7'><b>{}</b></span>",
+        "days": "<span color='#c0caf5'><b>{}</b></span>",
+        "weeks": "<span color='#9ece6a'><b>W{}</b></span>",
+        "weekdays": "<span color='#e0af68'><b>{}</b></span>",
+        "today": "<span color='#f7768e'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down"
+    }
+  },
+  // ── CPU ──────────────────────────────────────────────────────────────────
+  "cpu": {
+    "interval": 2,
+    "format": "󰻠 {usage}%",
+    "tooltip-format": "CPU: {usage}%\nLoad: {load}",
+    "on-click": "ghostty -e btop",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    }
+  },
+  // ── Disk ─────────────────────────────────────────────────────────────────
+  "disk": {
+    "interval": 30,
+    "format": "󰋊 {percentage_used}%",
+    "path": "/",
+    "tooltip-format": "Disk: {used} / {total} ({percentage_used}%)",
+    "on-click": "ghostty -e btop"
+  },
+  // ── Memory ───────────────────────────────────────────────────────────────
+  "memory": {
+    "interval": 5,
+    "format": "󰍛 {used:0.1f}G",
+    "tooltip-format": "RAM: {used:0.1f}G / {total:0.1f}G\nSwap: {swapUsed:0.1f}G / {swapTotal:0.1f}G",
+    "on-click": "ghostty -e btop",
+    "on-click-right": "ghostty -e btop --sort-column 4",
+    "states": {
+      "warning": 75,
+      "critical": 90
+    }
+  },
+  // ── Temperature ──────────────────────────────────────────────────────────
+  "temperature": {
+    "interval": 5,
+    "format": "{icon} {temperatureC}°",
+    "format-icons": [
+      "󱃃",
+      "󰔏",
+      "󱃂"
+    ],
+    "critical-threshold": 80,
+    "tooltip-format": "Temp: {temperatureC}°C"
+  },
+  // ── Battery ──────────────────────────────────────────────────────────────
+  "battery": {
+    "interval": 5,
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged": "󰚥 {capacity}%",
+    "format-full": "󰁹 Full",
+    "format-icons": [
+      "󰂎",
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
+    "tooltip-format": "{timeTo} · {power}W",
+    "states": {
+      "full": 100,
+      "good": 80,
+      "warning": 30,
+      "critical": 15
+    }
+  },
+  // ── MPRIS ────────────────────────────────────────────────────────────────
+  "mpris": {
+    "format": "{player_icon} {title}",
+    "format-paused": "󰏦 {title}",
+    "format-stopped": "",
+    "player-icons": {
+      "default": "󰐊",
+      "spotify": "󰓇",
+      "firefox": "󰈹",
+      "chromium": "󰊯"
+    },
+    "max-length": 22,
+    "tooltip-format": "{title} — {artist}\n{album}",
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous"
+  },
+  // ── Backlight ────────────────────────────────────────────────────────────
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "󰌶",
+      "󱩎",
+      "󱩏",
+      "󱩐",
+      "󱩑",
+      "󱩒",
+      "󱩓",
+      "󱩔",
+      "󰛨"
+    ],
+    "tooltip": false,
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "on-click": "brightnessctl set 50%"
+  },
+  // ── Audio ────────────────────────────────────────────────────────────────
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰖁 Muted",
+    "format-icons": {
+      "headphone": "󰋋",
+      "headset": "󰋎",
+      "default": [
+        "󰕿",
+        "󰖀",
+        "󰕾"
+      ]
+    },
+    "tooltip-format": "{desc} · {volume}%",
+    "scroll-step": 5,
+    "on-click": "pavucontrol",
+    "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+  // ── Idle Inhibitor ───────────────────────────────────────────────────────
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "󰒳",
+      "deactivated": "󰒲"
+    },
+    "tooltip-format-activated": "Idle inhibitor: ON",
+    "tooltip-format-deactivated": "Idle inhibitor: OFF"
+  },
+  // ── Network ──────────────────────────────────────────────────────────────
+  // No bare "format" key — only specific format-* keys to avoid fallback double-render
+  "network": {
+    "interval": 3,
+    "format-wifi": "󰤨 {signalStrength}%",
+    "format-ethernet": "󰈀 Wired",
+    "format-disconnected": "󰤭",
+    "tooltip-format-wifi": "{essid}\n󰤨 {signalStrength}%\n󰇚 {bandwidthDownBits}  󰕒 {bandwidthUpBits}",
+    "tooltip-format-ethernet": "󰈀 {ifname}  {ipaddr}\n󰇚 {bandwidthDownBits}  󰕒 {bandwidthUpBits}",
+    "tooltip-format-disconnected": "No connection",
+    "on-click": "ghostty --class=impala -e ~/.cargo/bin/impala --mode station",
+    "on-click-right": "nmcli radio wifi | grep -q enabled && nmcli radio wifi off || nmcli radio wifi on"
+  },
+  // ── Bluetooth ────────────────────────────────────────────────────────────
+  "bluetooth": {
+    "format": "󰂯",
+    "format-connected": "󰂱 {device_alias}",
+    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+    "format-off": "󰂲",
+    "tooltip-format": "{controller_alias}\n{num_connections} connected\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "  {device_alias} ({device_battery_percentage}%)",
+    "on-click": "ghostty --class=bluetui -e ~/.cargo/bin/bluetui",
+    "on-click-right": "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on"
+  },
+  // ── Tray ─────────────────────────────────────────────────────────────────
+  "tray": {
+    "icon-size": 15,
+    "spacing": 8,
+    "ignored-list": [
+      "nm-applet",
+      "blueman-applet",
+      "blueman-manager",
+      "network-manager-applet",
+      "nm-connection-editor"
+    ]
+  },
+  // ── Weather ──────────────────────────────────────────────────────────────
+  "custom/weather": {
+    "format": "{}",
+    "tooltip": true,
+    "interval": 3600,
+    "exec": "~/.config/waybar/scripts/weather.sh",
+    "return-type": "json",
+    "on-click": "ghostty -e bash -c 'curl -s v2.wttr.in/Kathmandu?m1 && read -n 1'"
+  },
+  // ── Notifications ────────────────────────────────────────────────────────
+  "custom/notification": {
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󱅫",
+      "none": "󰂚",
+      "dnd-notification": "󱏧",
+      "dnd-none": "󰂛",
+      "inhibited-notification": "󱅫",
+      "inhibited-none": "󰂚"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+  },
+  // ── Power ────────────────────────────────────────────────────────────────
+  "custom/power": {
+    "format": "󰐥",
+    "tooltip": true,
+    "tooltip-format": "Power menu",
+    "on-click": "$XDG_CONFIG_HOME/niri/scripts/fuzzel-powermenu.sh"
+  }
+}

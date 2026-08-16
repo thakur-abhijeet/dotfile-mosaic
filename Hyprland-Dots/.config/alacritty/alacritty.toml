@@ -1,0 +1,86 @@
+# ╔══════════════════════════════════════════╗
+# ║         Alacritty Configuration          ║
+# ║             Abhijeet · Dotfiles          ║
+# ╚══════════════════════════════════════════╝
+
+# ── Theme ────────────────────────────────────
+# Must remain top-level for Alacritty to detect it
+[general]
+import = ["~/.config/alacritty/theme.toml"]
+live_config_reload = true
+
+# ── Environment ──────────────────────────────
+[env]
+TERM = "xterm-256color"
+
+# ── Shell ────────────────────────────────────
+[shell]
+program = "/usr/bin/fish"
+args = ["--login"]
+
+# ── Window Appearance ────────────────────────
+[window]
+decorations = "None"
+opacity = 0.95
+blur = true
+dynamic_title = true
+dynamic_padding = true
+
+[window.padding]
+x = 16
+y = 16
+
+[window.dimensions]
+columns = 100
+lines = 28
+
+# ── Font Configuration ───────────────────────
+[font]
+size = 13.0
+
+normal = { family = "CaskaydiaCove Nerd Font", style = "Regular" }
+bold   = { family = "CaskaydiaCove Nerd Font", style = "Bold" }
+italic = { family = "CaskaydiaCove Nerd Font", style = "Italic" }
+
+[font.offset]
+x = 0
+y = 1
+
+# ── Cursor ───────────────────────────────────
+[cursor]
+style = { shape = "Beam", blinking = "On" }
+blink_interval = 500
+unfocused_hollow = true
+
+# ── Scrolling ────────────────────────────────
+[scrolling]
+history = 10000
+multiplier = 3
+
+# ── Text Selection ───────────────────────────
+[selection]
+semantic_escape_chars = ",│`|:\"' ()[]{}<>="
+save_to_clipboard = true
+
+# ── Mouse Behavior ───────────────────────────
+[mouse]
+hide_when_typing = true
+
+# ── Keybindings ──────────────────────────────
+[keyboard]
+bindings = [
+  # Clipboard
+  { key = "C", mods = "Control|Shift", action = "Copy" },
+  { key = "V", mods = "Control|Shift", action = "Paste" },
+
+  # Spawn New Instance
+  { key = "Return", mods = "Control|Shift", action = "SpawnNewInstance" },
+
+  # Font Size Controls
+  { key = "Plus", mods = "Control", action = "IncreaseFontSize" },
+  { key = "Minus", mods = "Control", action = "DecreaseFontSize" },
+  { key = "Key0", mods = "Control", action = "ResetFontSize" },
+
+  # Fullscreen
+  { key = "F11", action = "ToggleFullscreen" }
+]

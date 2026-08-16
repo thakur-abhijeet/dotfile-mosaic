@@ -1,0 +1,98 @@
+# ╔══════════════════════════════════════════╗
+# ║         Ghostty — config                 ║
+# ╚══════════════════════════════════════════╝
+# Docs: https://ghostty.org/docs/config
+
+# =============================================================================
+# Core
+# =============================================================================
+term  = xterm-ghostty
+# theme = TokyoNight  # Overridden by custom palette below
+window-inherit-working-directory = true
+command = /usr/bin/fish
+
+# =============================================================================
+# Theme
+# =============================================================================
+config-file = theme.conf
+
+# =============================================================================
+# Font
+# =============================================================================
+font-family  = CaskaydiaCove Nerd Font
+font-size    = 13
+font-feature = +calt
+font-feature = +liga
+adjust-cell-height = 2
+font-thicken = true
+
+# =============================================================================
+# Window
+# =============================================================================
+window-padding-x         = 20
+window-padding-y         = 20
+window-decoration        = false
+background-opacity       = 1.0
+background-blur-radius   = 0
+window-colorspace        = "display-p3"
+confirm-close-surface    = false
+
+# =============================================================================
+# Cursor
+# =============================================================================
+cursor-style       = block
+cursor-color       = #E93636
+cursor-text        = #ffffff
+cursor-style-blink = true
+
+# =============================================================================
+# Mouse
+# =============================================================================
+mouse-hide-while-typing = true
+mouse-shift-capture = true
+
+# =============================================================================
+# Clipboard
+# =============================================================================
+clipboard-trim-trailing-spaces = true
+
+# =============================================================================
+# GTK (Linux only — ignored on macOS)
+# =============================================================================
+gtk-tabs-location  = bottom
+gtk-wide-tabs      = false
+gtk-single-instance = true
+
+# =============================================================================
+# Keybindings
+# =============================================================================
+
+# Clipboard
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+
+# Font size
+keybind = ctrl+equal=increase_font_size:1
+keybind = ctrl+minus=decrease_font_size:1
+keybind = ctrl+zero=reset_font_size
+
+# Tabs
+keybind = ctrl+shift+t=new_tab
+keybind = ctrl+shift+w=close_surface
+keybind = ctrl+shift+right=next_tab
+keybind = ctrl+shift+left=previous_tab
+
+# Split panes
+keybind = ctrl+shift+d=new_split:right
+keybind = ctrl+shift+minus=new_split:down
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+l=goto_split:right
+keybind = ctrl+shift+k=goto_split:top
+keybind = ctrl+shift+j=goto_split:bottom
+keybind = ctrl+shift+e=equalize_splits
+
+# Fullscreen
+keybind = f11=toggle_fullscreen
+
+# Quick terminal reset
+keybind = ctrl+shift+r=reload_config

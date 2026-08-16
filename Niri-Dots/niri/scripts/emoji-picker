@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# ╔══════════════════════════════════════════╗
+# ║         emoji-picker                     ║
+# ║         Abhijeet · Ubuntu + Niri         ║
+# ╚══════════════════════════════════════════╝
+# Fuzzel-based emoji picker with local cache
+
+set -euo pipefail
+
+# =============================================================================
+# Config
+# =============================================================================
+EMOJI_JSON="${XDG_CACHE_HOME:-$HOME/.cache}/emoji/emoji.json"
+EMOJI_URL="https://raw.githubusercontent.com/github/gemoji/master/db/emoji.json"
+
+# =============================================================================
+# Guards
+# =============================================================================
+for cmd in jq fuzzel wl-copy curl notify-send; do
+    if ! command -v "$cmd" &>/dev/null; then
+        notify-send --urgency=critical "emoji-picker" "'$cmd' is not installed."
+        exit 1
+    fi
+done
+
+# =============================================================================
+# Cache
+# =============================================================================
+if [[ ! -f "$EMOJI_JSON" ]]; then
+    mkdir -p "$(dirname "$EMOJI_JSON")"
+
+    notify-send "emoji-picker" "Fetching emoji list for the first time..."
+
+    if ! curl -fsSL "$EMOJI_URL" -o "$EMOJI_JSON"; then
+        notify-send --urgency=critical "emoji-picker" "Failed to fetch emoji list. Check your connection."
+        rm -f "$EMOJI_JSON"   # don't leave a partial file
+        exit 1
+    fi
+fi
+
+# =============================================================================
+# Pick
+# =============================================================================
+SELECTED=$(jq -r '.[] | "\(.emoji)  \(.description)"' "$EMOJI_JSON" \
+    | fuzzel --dmenu --prompt="Emoji ❯ ") || exit 0
+
+[[ -z "$SELECTED" ]] && exit 0
+
+EMOJI=$(echo "$SELECTED" | awk '{print $1}')
+
+# =============================================================================
+# Copy & Notify
+# =============================================================================
+echo -n "$EMOJI" | wl-copy
+
+notify-send \
+    --app-name="emoji-picker" \
+    --icon=face-smile \
+    "Copied $EMOJI" \
+    "$(echo "$SELECTED" | awk '{$1=""; print $0}' | xargs)"

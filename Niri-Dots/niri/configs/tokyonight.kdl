@@ -1,0 +1,19 @@
+// Tokyo Night Niri Theme
+
+layout {
+    focus-ring {
+        width 2
+        active-color "#7aa2f7"
+        inactive-color "#1f2335"
+    }
+
+    border {
+        width 0
+        active-color "#7aa2f7"
+        inactive-color "#1f2335"
+    }
+}
+
+window-rule {
+    draw-border-with-background false
+}

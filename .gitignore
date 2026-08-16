@@ -1,0 +1,7 @@
+# Ignore system-specific and temporary files
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
+*~
+.gemini/

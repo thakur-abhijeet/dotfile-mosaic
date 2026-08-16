@@ -1,0 +1,79 @@
+// ╔══════════════════════════════════════════╗
+// ║         Niri — environment.kdl           ║
+// ║         Abhijeet · Ubuntu + Niri         ║
+// ╚══════════════════════════════════════════╝
+// Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
+
+// ═══════════════════════════════════════════
+// Environment Variables
+// ═══════════════════════════════════════════
+environment {
+
+    // ── Wayland Backends ──────────────────
+    QT_QPA_PLATFORM              "wayland"
+    QT_QPA_PLATFORMTHEME         "qt6ct"
+    ELECTRON_OZONE_PLATFORM_HINT "wayland"
+    MOZ_ENABLE_WAYLAND           "1"
+    GDK_BACKEND                  "wayland"      // GTK apps — explicit Wayland
+
+    // ── GTK ───────────────────────────────
+    GTK_THEME                    "Adwaita-dark"
+    GTK_USE_PORTAL               "1"
+
+    // ── Java / JVM ────────────────────────
+    _JAVA_AWT_WM_NONREPARENTING  "1"            // fixes blank Java windows on tiling WMs
+    JAVA_HOME                    "/usr/lib/jvm/java-21-openjdk-amd64"
+
+    // ── Editor ────────────────────────────
+    EDITOR                       "nvim"
+    VISUAL                       "nvim"
+
+    // ── XDG ───────────────────────────────
+    XDG_CURRENT_DESKTOP          "niri"
+    XDG_SESSION_TYPE             "wayland"
+}
+
+// ═══════════════════════════════════════════
+// Decorations
+// ═══════════════════════════════════════════
+
+// Prefer server-side decorations — consistent titlebar-free look
+prefer-no-csd
+
+// ═══════════════════════════════════════════
+// Screenshots
+// ═══════════════════════════════════════════
+
+screenshot-path "~/Pictures/Screenshots/%Y-%m-%d_%H-%M-%S.png"
+
+// ═══════════════════════════════════════════
+// Hotkey Overlay
+// ═══════════════════════════════════════════
+
+// Show with Mod+Shift+Slash — skip on startup to keep things clean
+hotkey-overlay {
+    skip-at-startup
+}
+
+// ═══════════════════════════════════════════
+// Lid Events  (laptop only)
+// ═══════════════════════════════════════════
+
+switch-events {
+    lid-close {
+        spawn "systemctl" "suspend"
+    }
+    lid-open {
+        spawn "notify-send" "Welcome back" "Lid opened."
+    }
+}
+
+// ═══════════════════════════════════════════
+// Cursor
+// ═══════════════════════════════════════════
+
+cursor {
+    xcursor-theme "Bibata-Modern-Ice"
+    xcursor-size  18
+    hide-when-typing
+}

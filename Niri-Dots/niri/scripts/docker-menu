@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# ╔══════════════════════════════════════════╗
+# ║         docker-menu                      ║
+# ║         Abhijeet · Ubuntu + Niri         ║
+# ╚══════════════════════════════════════════╝
+# Fuzzel-based Docker container manager
+
+set -euo pipefail
+
+# =============================================================================
+# Guards
+# =============================================================================
+if ! command -v docker &>/dev/null; then
+    notify-send --urgency=critical "docker-menu" "Docker is not installed or not in PATH."
+    exit 1
+fi
+
+if ! command -v fuzzel &>/dev/null; then
+    notify-send --urgency=critical "docker-menu" "fuzzel is not installed."
+    exit 1
+fi
+
+if ! docker info &>/dev/null; then
+    notify-send --urgency=critical "docker-menu" "Docker daemon is not running.\nStart it with: sudo systemctl start docker"
+    exit 1
+fi
+
+# =============================================================================
+# Helpers
+# =============================================================================
+TERM_CMD="ghostty -e"
+
+notify() {
+    notify-send --app-name="docker-menu" --icon=utilities-terminal "$1" "$2"
+}
+
+# =============================================================================
+# Step 1 — Pick Action
+# =============================================================================
+ACTIONS="▶  Start
+⏹  Stop
+↺  Restart
+📋 Logs
+🐚 Exec Shell
+🗑  Remove
+🧹 Prune (Cleanup)"
+
+ACTION=$(printf "%s" "$ACTIONS" \
+    | fuzzel --dmenu --prompt="Docker ❯ " --lines=7) || exit 0
+
+[[ -z "$ACTION" ]] && exit 0
+
+# Strip the icon prefix to get the clean action name
+ACTION=$(echo "$ACTION" | sed 's/^[^ ]* *//')
+
+# =============================================================================
+# Step 2 — Prune (no container needed)
+# =============================================================================
+if [[ "$ACTION" == "Prune (Cleanup)" ]]; then
+    CONFIRM=$(printf "Yes, prune\nCancel" \
+        | fuzzel --dmenu --prompt="Confirm prune? ❯ " --lines=2) || exit 0
+
+    [[ "$CONFIRM" != "Yes, prune" ]] && exit 0
+
+    $TERM_CMD bash -c "
+        echo '🧹 Pruning unused Docker resources...'
+        docker system prune -f
+        echo ''
+        echo 'Done. Press Enter to close.'
+        read
+    "
+    exit 0
+fi
+
+# =============================================================================
+# Step 3 — Pick Container
+# =============================================================================
+
+# For Start — show all stopped containers
+# For others — show only running containers
+if [[ "$ACTION" == "Start" ]]; then
+    CONTAINER_LIST=$(docker ps -a --filter "status=exited" --format "{{.Names}} ({{.Status}})")
+else
+    CONTAINER_LIST=$(docker ps --format "{{.Names}} ({{.Status}})")
+fi
+
+if [[ -z "$CONTAINER_LIST" ]]; then
+    notify "docker-menu" "No containers available for: $ACTION"
+    exit 0
+fi
+
+CONTAINER=$(printf "%s" "$CONTAINER_LIST" \
+    | fuzzel --dmenu --prompt="Container ❯ ") || exit 0
+
+[[ -z "$CONTAINER" ]] && exit 0
+
+NAME=$(echo "$CONTAINER" | awk '{print $1}')
+
+# =============================================================================
+# Step 4 — Execute Action
+# =============================================================================
+case "$ACTION" in
+    Start)
+        docker start "$NAME" \
+            && notify "Started" "$NAME is now running."
+        ;;
+    Stop)
+        docker stop "$NAME" \
+            && notify "Stopped" "$NAME has been stopped."
+        ;;
+    Restart)
+        docker restart "$NAME" \
+            && notify "Restarted" "$NAME has been restarted."
+        ;;
+    Logs)
+        $TERM_CMD bash -c "docker logs -f '$NAME'; echo ''; echo 'Press Enter to close.'; read"
+        ;;
+    "Exec Shell")
+        $TERM_CMD bash -c "
+            docker exec -it '$NAME' /bin/bash 2>/dev/null \
+            || docker exec -it '$NAME' /bin/sh
+        "
+        ;;
+    Remove)
+        CONFIRM=$(printf "Yes, remove\nCancel" \
+            | fuzzel --dmenu --prompt="Remove $NAME? ❯ " --lines=2) || exit 0
+
+        [[ "$CONFIRM" != "Yes, remove" ]] && exit 0
+
+        docker rm -f "$NAME" \
+            && notify "Removed" "$NAME has been removed."
+        ;;
+    *)
+        notify "docker-menu" "Unknown action: $ACTION"
+        exit 1
+        ;;
+esac

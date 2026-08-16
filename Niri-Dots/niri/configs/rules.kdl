@@ -1,0 +1,137 @@
+// ╔══════════════════════════════════════════╗
+// ║         Niri — rules.kdl                 ║
+// ║         Abhijeet · Ubuntu + Niri         ║
+// ╚══════════════════════════════════════════╝
+// Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Window-Rules
+
+// ═══════════════════════════════════════════
+// Global Geometry
+// ═══════════════════════════════════════════
+window-rule {
+    geometry-corner-radius 12    // bumped from 8 — matches fuzzel/ghostty radius
+    clip-to-geometry true
+}
+
+// ═══════════════════════════════════════════
+// Floating — System Dialogs & Popups
+// ═══════════════════════════════════════════
+window-rule {
+    match title="^(Open File)(.*)$"
+    match title="^(Select a File)(.*)$"
+    match title="^(Choose wallpaper)(.*)$"
+    match title="^(Open Folder)(.*)$"
+    match title="^(Save As)(.*)$"
+    match title="^(Library)(.*)$"
+    match title="^(File Upload)(.*)$"
+    match title="^(Confirm to replace files)$"
+    match title="^(File Operation Progress)$"
+
+    match app-id="^org.pulseaudio.pavucontrol$"
+    match app-id="^nm-connection-editor$"
+    match app-id="^blueman-manager$"
+    match app-id="^galculator$"
+    match app-id="^gnome-calculator$"
+    match app-id="^nwg-look$"
+    match app-id="^qt5ct$"
+    match app-id="^qt6ct$"
+
+    open-floating true
+    default-floating-position x=0.5 y=0.5 relative-to="top-left"
+}
+
+// ═══════════════════════════════════════════
+// Floating — Notification Center (SwayNC)
+// ═══════════════════════════════════════════
+window-rule {
+    match app-id="^swaync$"
+    match app-id="^swaync-control-center$"
+    match app-id="^swaync-notification-window$"
+
+    open-floating true
+}
+
+// ═══════════════════════════════════════════
+// Floating — Scratchpad Terminal
+// ═══════════════════════════════════════════
+window-rule {
+    match title="^niri-scratchpad$"
+
+    open-floating true
+    default-column-width     { proportion 0.6; }
+    default-window-height    { proportion 0.5; }
+    default-floating-position x=0.5 y=0.05 relative-to="top-left"
+}
+
+// ═══════════════════════════════════════════
+// Floating — Picture-in-Picture
+// ═══════════════════════════════════════════
+window-rule {
+    match title="^Picture-in-Picture$"
+    match title="^PiP$"
+
+    open-floating true
+    default-floating-position x=10 y=10 relative-to="bottom-right"
+}
+
+// ═══════════════════════════════════════════
+// Floating — Xwayland Video Bridge
+// Invisible window needed for screen sharing
+// ═══════════════════════════════════════════
+window-rule {
+    match app-id="^xwaylandvideobridge$"
+
+    open-floating true
+    default-column-width {}
+    opacity 0.0
+}
+
+// ═══════════════════════════════════════════
+// Workspace Assignments
+// ═══════════════════════════════════════════
+
+// Browsers → workspace 1
+window-rule {
+    match app-id="^firefox$"
+    match app-id="^brave$"
+    match app-id="^google-chrome$"
+    match app-id="^chromium$"
+
+    open-on-workspace "1"
+    default-column-width { proportion 0.75; }
+}
+
+// Terminals → workspace 2
+window-rule {
+    match app-id="^com.mitchellh.ghostty$"
+    match app-id="^kitty$"
+    match app-id="^alacritty$"
+    match app-id="^foot$"
+    match app-id="^wezterm$"
+
+    open-on-workspace "2"
+    default-column-width { proportion 0.5; }
+}
+
+// VS Code → workspace 3
+window-rule {
+    match app-id="^code-url-handler$"
+    match app-id="^code$"
+    match app-id="^vscodium$"
+
+    open-on-workspace "3"
+    default-column-width { proportion 0.8; }
+}
+
+// ═══════════════════════════════════════════
+// Visual — Opacity
+// ═══════════════════════════════════════════
+
+// Ghostty handles its own opacity via background-opacity in config
+// Only set here for terminals that don't have native opacity support
+window-rule {
+    match app-id="^kitty$"
+    match app-id="^foot$"
+    match app-id="^wezterm$"
+
+    opacity 0.95
+}

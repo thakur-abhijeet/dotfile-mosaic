@@ -1,0 +1,80 @@
+// ╔══════════════════════════════════════════╗
+// ║         Niri — input.kdl                 ║
+// ║         Abhijeet · Ubuntu + Niri         ║
+// ╚══════════════════════════════════════════╝
+// Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Input
+
+input {
+
+    // ═══════════════════════════════════════
+    // Keyboard
+    // ═══════════════════════════════════════
+    keyboard {
+        xkb {
+            layout "us"
+            // variant ""
+            // options "caps:escape,compose:ralt"
+        }
+
+        // delay: ms before repeat starts | rate: keys per second
+        repeat-delay 600
+        repeat-rate  25
+
+        // track-layout "global"  // uncomment to share layout across all windows
+    }
+
+    // ═══════════════════════════════════════
+    // Modifier Key
+    // ═══════════════════════════════════════
+    mod-key "Super"
+
+    // ═══════════════════════════════════════
+    // Touchpad  (office laptop)
+    // ═══════════════════════════════════════
+    touchpad {
+        tap                             // tap-to-click
+        dwt                             // disable while typing
+        natural-scroll                  // content follows finger
+        scroll-method "two-finger"
+        accel-profile "adaptive"
+        accel-speed   0.3
+        // tap-button-map "left-middle-right"  // 1/2/3 finger tap mapping
+        // middle-emulation                    // middle click via L+R tap
+    }
+
+    // ═══════════════════════════════════════
+    // Mouse
+    // ═══════════════════════════════════════
+    mouse {
+        // natural-scroll               // usually off for mice
+        accel-profile "flat"            // 1:1 movement, no acceleration
+        accel-speed   0.0
+    }
+
+    // ═══════════════════════════════════════
+    // Focus Behavior
+    // ═══════════════════════════════════════
+
+    // Return to previous workspace when re-selecting the current one
+    workspace-auto-back-and-forth
+
+    // Focus follows mouse — 0% scroll prevents view jumping on edge hover
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+// ═══════════════════════════════════════════
+// Gestures  (touchpad — currently defaults)
+// ═══════════════════════════════════════════
+// Niri ships with 3-finger swipe for workspace switching by default.
+// Uncomment to add hot corners or custom gesture actions.
+//
+// gestures {
+//     hot-corners {
+//         top-left {
+//             spawn "hyprlock"         // or your lock command
+//         }
+//         top-right {
+//             spawn "niri" "msg" "action" "toggle-overview"
+//         }
+//     }
+// }

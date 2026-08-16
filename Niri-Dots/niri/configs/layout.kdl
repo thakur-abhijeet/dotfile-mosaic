@@ -1,0 +1,104 @@
+// ╔══════════════════════════════════════════╗
+// ║         Niri — layout.kdl                ║
+// ║         Abhijeet · Ubuntu + Niri         ║
+// ╚══════════════════════════════════════════╝
+// Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
+
+layout {
+
+    // ═══════════════════════════════════════
+    // Core
+    // ═══════════════════════════════════════
+
+    // Gap between columns (windows)
+    gaps 10
+
+    // Center focused column: "never" | "always" | "on-overflow"
+    center-focused-column "on-overflow"
+//    always-center-single-column
+
+    // ═══════════════════════════════════════
+    // Tab Indicators
+    // ═══════════════════════════════════════
+    tab-indicator {
+        hide-when-single-tab
+        width 4
+        gap 6
+    }
+
+    // ═══════════════════════════════════════
+    // Column Widths  (Mod+R to cycle)
+    // ═══════════════════════════════════════
+    preset-column-widths {
+        proportion 0.25
+        proportion 0.5
+        proportion 0.75
+        proportion 1.0
+    }
+
+    default-column-width {
+        proportion 0.5
+    }
+
+    // ═══════════════════════════════════════
+    // Window Heights  (Mod+Shift+H/L to cycle)
+    // ═══════════════════════════════════════
+    preset-window-heights {
+        proportion 0.25
+        proportion 0.5
+        proportion 0.75
+        proportion 1.0
+    }
+
+    // ═══════════════════════════════════════
+    // Focus Ring  (outer border on focused window)
+    // ═══════════════════════════════════════
+    focus-ring {
+        on
+        width        2
+        // Tokyo Night Gradient: Blue to Purple (Commented out for themed colors)
+        // active-gradient from="#7aa2f7" to="#bb9af7" angle=45
+        // inactive-color "#1f2335"
+    }
+
+    // ═══════════════════════════════════════
+    // Insert Hint  (visual cue for window movement)
+    // ═══════════════════════════════════════
+    insert-hint {
+        on
+        color "#7aa2f780"
+    }
+
+    // ═══════════════════════════════════════
+    // Border  (inner border — off, focus-ring handles it)
+    // ═══════════════════════════════════════
+    border {
+        off
+        width        2
+        // active-color   "#7aa2f7"  // @blue
+        // inactive-color "#1f2335"  // @bg-dark
+    }
+
+    // ═══════════════════════════════════════
+    // Shadow
+    // ═══════════════════════════════════════
+    shadow {
+        on
+        softness 30
+        spread   5
+        offset   x=0 y=5
+        color    "#00000070"
+    }
+
+    // ═══════════════════════════════════════
+    // Struts  (reserve space for bars/panels)
+    // ═══════════════════════════════════════
+    // Waybar handles exclusive zones automatically.
+    // Only set these if you have a panel that doesn't.
+    struts {
+        // left   0
+        // right  0
+        // top    0
+        // bottom 0
+    }
+}

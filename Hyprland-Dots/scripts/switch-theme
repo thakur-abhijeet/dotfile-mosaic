@@ -1,0 +1,122 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+# ────────────── Arguments & Paths ──────────────
+THEME_NAME="$1"
+THEME_DIR="$HOME/.config/themes/$THEME_NAME"
+
+if [[ ! -d "$THEME_DIR" ]]; then
+  echo "Theme '$THEME_NAME' does not exist."
+  exit 1
+fi
+
+echo "Switching theme to: '$THEME_NAME'"
+
+# ────────────── Active Symlink ──────────────
+# Ensure active symlink points to the selected theme name under ~/.config/themes
+ln -sfn "$THEME_NAME" "$HOME/.config/themes/active"
+
+# ────────────── Helper Function ──────────────
+symlink_file() {
+  local src="$1"
+  local dest="$2"
+
+  if [[ ! -f "$src" ]]; then
+    echo "Warning: Source file '$src' does not exist. Skipping..."
+    return
+  fi
+
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    rm -f "$dest"
+  fi
+
+  ln -s "$src" "$dest"
+  echo "Linked: $(basename "$src") → $dest"
+}
+
+# ────────────── Hyprland ──────────────
+symlink_file "$THEME_DIR/hyprland.conf" "$HOME/.config/hypr/theme.conf"
+if ! hyprctl reload; then
+  echo "Warning: Failed to reload Hyprland"
+fi
+
+# ────────────── Alacritty ──────────────
+symlink_file "$THEME_DIR/alacritty.toml" "$HOME/.config/alacritty/theme.toml"
+
+# ────────────── Neovim ──────────────
+symlink_file "$THEME_DIR/neovim.lua" "$HOME/.config/nvim/lua/plugins/theme.lua"
+
+# ────────────── Noctalia ──────────────
+NOCTALIA_ASSETS="$HOME/.config/noctalia/colorschemes"
+matches=($(find "$NOCTALIA_ASSETS" -maxdepth 1 -type d -iname "$THEME_NAME*" -printf "%f\n"))
+
+if [[ ${#matches[@]} -eq 0 ]]; then
+  echo "Noctalia theme matching '$THEME_NAME' found!"
+elif [[ ${#matches[@]} -eq 1 ]]; then
+  THEME_FOLDER="${matches[0]}"
+else
+  echo "Multiple Noctalia themes found:"
+  for i in "${!matches[@]}"; do
+    echo "[$i] ${matches[$i]}"
+  done
+  read -p "Select a theme number: " sel
+  if [[ -z "${matches[$sel]}" ]]; then
+    echo "Invalid selection. Skipping Noctalia theme."
+    THEME_FOLDER=""
+  else
+    THEME_FOLDER="${matches[$sel]}"
+  fi
+fi
+
+if [[ -n "${THEME_FOLDER:-}" ]]; then
+  if ! qs -c noctalia-shell ipc call colorScheme set "$THEME_FOLDER"; then
+    echo "Warning: Failed to apply Noctalia theme '$THEME_FOLDER'"
+  else
+    echo "Noctalia theme applied: $THEME_FOLDER"
+  fi
+fi
+
+# ────────────── BTOP ──────────────
+BTOP_THEME_SRC="$THEME_DIR/btop.theme"
+BTOP_THEME_DIR="$HOME/.config/btop/themes"
+BTOP_THEME_DEST="$BTOP_THEME_DIR/theme.theme"
+BTOP_CONF="$HOME/.config/btop/btop.conf"
+
+mkdir -p "$BTOP_THEME_DIR"
+
+if [[ -f "$BTOP_THEME_SRC" ]]; then
+  symlink_file "$BTOP_THEME_SRC" "$BTOP_THEME_DEST"
+  if [[ -f "$BTOP_CONF" ]]; then
+    sed -i 's/^color_theme.*/color_theme="theme"/' "$BTOP_CONF"
+  else
+    echo 'color_theme="theme"' >"$BTOP_CONF"
+  fi
+  echo "BTOP theme applied."
+else
+  echo "No btop.theme found in theme folder ($BTOP_THEME_SRC). Skipping BTOP."
+fi
+
+# ────────────── Kitty ──────────────
+symlink_file "$THEME_DIR/kitty.conf" "$HOME/.config/kitty/theme.conf"
+
+# Reload kitty (graceful)
+if command -v kitty >/dev/null; then
+  kitty @ set-colors --all "$HOME/.config/kitty/theme.conf" 2>/dev/null || true
+fi
+
+# ────────────── VS Code ──────────────
+VSCODE_USER_DIR="$HOME/.config/Code/User"
+VSCODE_THEME_SRC="$THEME_DIR/vscode.json"
+VSCODE_SETTINGS="$VSCODE_USER_DIR/settings.json"
+
+mkdir -p "$VSCODE_USER_DIR"
+
+if [[ -f "$VSCODE_THEME_SRC" ]]; then
+  symlink_file "$VSCODE_THEME_SRC" "$VSCODE_SETTINGS"
+  echo "VS Code theme applied."
+else
+  echo "No vscode.json found. Skipping VS Code."
+fi
+
+echo "✅ Theme '$THEME_NAME' applied successfully!"

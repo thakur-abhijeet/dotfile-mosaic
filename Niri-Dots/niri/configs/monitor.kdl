@@ -1,0 +1,48 @@
+// ╔══════════════════════════════════════════╗
+// ║         Niri — monitor.kdl               ║
+// ║         Abhijeet · Ubuntu + Niri         ║
+// ╚══════════════════════════════════════════╝
+// Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Outputs
+// List connected outputs: niri msg outputs
+
+// ═══════════════════════════════════════════
+// Display Layout
+//
+//  ┌──────────────┬──────────────┐
+//  │   HDMI-A-1   │    eDP-1     │
+//  │  1366x768    │  1366x768    │
+//  │  (external)  │  (laptop)    │
+//  └──────────────┴──────────────┘
+//  x=0            x=1366
+//
+// To list available modes: niri msg outputs
+// ═══════════════════════════════════════════
+
+// ═══════════════════════════════════════════
+// External Monitor — HDMI-A-1
+// ═══════════════════════════════════════════
+output "HDMI-A-1" {
+    mode      "1920x1080@100"
+    //mode      "1366x768@59.790"
+    scale     1.0
+    position  x=0    y=0
+    transform "normal"
+
+    // Higher refresh if monitor supports it — uncomment to test
+    // mode "1920x1080@100"
+}
+
+// ═══════════════════════════════════════════
+// Laptop Display — eDP-1
+// Positioned directly right of HDMI-A-1 (x = 1366)
+// ═══════════════════════════════════════════
+output "eDP-1" {
+    mode     "1366x768@59.994"
+    scale    1.0
+    // FOR MONITOR SIZE = 1366 * () on the right of laptop
+    //position x=1366 y=0
+    // FOR MONITOR SIZE = 1920 * () on the right of laptop
+    position x=1920 y=0
+    // To disable laptop screen when external is connected:
+    // off
+}

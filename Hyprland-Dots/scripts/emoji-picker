@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+EMOJI_JSON="$HOME/.cache/emoji.json"
+
+# Cache emoji list locally (faster launches)
+if [ ! -f "$EMOJI_JSON" ]; then
+  mkdir -p ~/.cache
+  curl -s https://raw.githubusercontent.com/github/gemoji/master/db/emoji.json > "$EMOJI_JSON"
+fi
+
+jq -r '.[] | "\(.emoji)  \(.description)"' "$EMOJI_JSON" \
+| fuzzel --dmenu --prompt="Emoji ❯ " \
+| awk '{print $1}' \
+| wl-copy

@@ -1,0 +1,301 @@
+// ╔══════════════════════════════════════════╗
+// ║         Niri — keybinds.kdl              ║
+// ║         Abhijeet · Ubuntu + Niri         ║
+// ╚══════════════════════════════════════════╝
+// Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Key-Bindings
+
+binds {
+    // ═══════════════════════════════════════
+    // System
+    // ═══════════════════════════════════════
+
+    // Show all keybinds overlay
+    Super+Shift+Slash { show-hotkey-overlay; }
+
+    // Close focused window
+    Super+Q { close-window; }
+
+    // Toggle fullscreen
+    Super+F { fullscreen-window; }
+
+    // Maximize column (monocle / zen mode)
+    Super+M { maximize-column; }
+
+    // Center focused column on screen
+    Super+A { center-column; }
+
+    // Toggle Waybar visibility
+    Super+Shift+B { spawn "killall" "-SIGUSR1" "waybar"; }
+
+    // Toggle overview (expose-style workspace view)
+    Super+O { toggle-overview; }
+
+    // Toggle floating for focused window
+    Super+S { toggle-window-floating; }
+
+    // Quit niri (no confirmation)
+    Super+Ctrl+Q { quit skip-confirmation=true; }
+
+    // Shutdown system
+    Super+Shift+Q { spawn "bash" "-c" "shutdown now"; }
+
+    // Lock screen (hyprlock reads config from XDG automatically)
+    Super+L { spawn "bash" "-c" "hyprlock --config $HOME/.config/hyprlock/hyprlock.conf"; }
+
+    // Open power menu (fuzzel-based)
+    Super+Escape { spawn "bash" "-c" "$HOME/.config/niri/scripts/fuzzel-powermenu.sh"; }
+
+    // Theme selector
+    Super+T { spawn "bash" "-c" "$HOME/.config/themes/theme-selector.sh"; }
+
+    // Switch monitor configuration
+    Super+Alt+M { spawn "bash" "-c" "$HOME/.config/niri/scripts/monitor-switch.sh"; }
+
+    // ═══════════════════════════════════════
+    // Application Launchers
+    // ═══════════════════════════════════════
+
+    // Terminal (Ghostty)
+    Super+Return { spawn "ghostty"; }
+
+    // Web browser (Firefox)
+    Super+B { spawn "firefox"; }
+
+    // Calculator
+    Super+C { spawn "gnome-calculator"; }
+
+    // File manager (Nautilus)
+    Super+E { spawn "nautilus" "--new-window"; }
+
+    // App launcher / search (Vicinae)
+    Super+Space { spawn "vicinae" "toggle"; }
+
+    // App launcher (Fuzzel - traditional)
+    Super+D { spawn "fuzzel"; }
+
+    // Clipboard history (Vicinae)
+    Super+V { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }
+
+    // Emoji picker script
+    Super+Period { spawn "bash" "-c" "$XDG_CONFIG_HOME/niri/scripts/emoji-picker"; }
+
+    // Docker container manager script
+    Super+Alt+D { spawn "bash" "-c" "$XDG_CONFIG_HOME/niri/scripts/docker-menu"; }
+
+    // Scratchpad floating terminal toggle
+    Super+Z { spawn "bash" "-c" "$XDG_CONFIG_HOME/niri/scripts/scratchpad.sh"; }
+
+    // Spotify
+    Super+K { spawn "spotify";}
+
+    // ═══════════════════════════════════════
+    // Focus — Windows & Columns
+    // ═══════════════════════════════════════
+
+    // Focus column left/right
+    Super+Left  { focus-column-left; }
+    Super+Right { focus-column-right; }
+
+    // Focus window up/down within a column
+    Super+Up   { focus-window-up; }
+    Super+Down { focus-window-down; }
+
+    // Focus first/last column
+    Super+Home { focus-column-first; }
+    Super+End  { focus-column-last; }
+
+    // ═══════════════════════════════════════
+    // Move — Windows & Columns
+    // ═══════════════════════════════════════
+
+    // Move column left/right
+    // NOTE: original used Super+Ctrl+Shift — kept as-is
+
+    Super+Ctrl+Shift+Left  { move-column-left; }
+    Super+Ctrl+Shift+Right { move-column-right; }
+
+    // Move window up/down within a column (commented in original)
+    // Super+Shift+Down { move-window-down; }
+    // Super+Shift+Up   { move-window-up; }
+
+    // ═══════════════════════════════════════
+    // Focus — Monitors
+    // ═══════════════════════════════════════
+
+    // Focus monitor left/right
+    Super+Shift+Left  { focus-monitor-left; }
+    Super+Shift+Right { focus-monitor-right; }
+
+    // ═══════════════════════════════════════
+    // Move — To Monitor
+    // ═══════════════════════════════════════
+
+    // Move focused column to monitor left/right
+    Shift+Alt+Left  { move-column-to-monitor-left; }
+    Shift+Alt+Right { move-column-to-monitor-right; }
+
+    // ═══════════════════════════════════════
+    // Workspaces — Focus
+    // ═══════════════════════════════════════
+
+    // Switch to previous workspace
+    Super+Tab { focus-workspace-previous; }
+
+    // Cycle workspaces up/down
+    // NOTE: original used Super+Ctrl+Left/Right — kept but conflicts with
+    // move-column if you add those later. Use Page_Up/Down as alternative:
+    // Super+Ctrl+Page_Up   { focus-workspace-up; }
+    // Super+Ctrl+Page_Down { focus-workspace-down; }
+    Super+Ctrl+Left  { focus-workspace-up; }
+    Super+Ctrl+Right { focus-workspace-down; }
+
+    // Jump directly to workspace 1-9
+    Super+1 { focus-workspace 1; }
+    Super+2 { focus-workspace 2; }
+    Super+3 { focus-workspace 3; }
+    Super+4 { focus-workspace 4; }
+    Super+5 { focus-workspace 5; }
+    Super+6 { focus-workspace 6; }
+    Super+7 { focus-workspace 7; }
+    Super+8 { focus-workspace 8; }
+    Super+9 { focus-workspace 9; }
+
+    // ═══════════════════════════════════════
+    // Workspaces — Move Column
+    // ═══════════════════════════════════════
+
+    // Move focused column to workspace 1-9
+    Super+Shift+1 { move-column-to-workspace 1; }
+    Super+Shift+2 { move-column-to-workspace 2; }
+    Super+Shift+3 { move-column-to-workspace 3; }
+    Super+Shift+4 { move-column-to-workspace 4; }
+    Super+Shift+5 { move-column-to-workspace 5; }
+    Super+Shift+6 { move-column-to-workspace 6; }
+    Super+Shift+7 { move-column-to-workspace 7; }
+    Super+Shift+8 { move-column-to-workspace 8; }
+    Super+Shift+9 { move-column-to-workspace 9; }
+
+    // ═══════════════════════════════════════
+    // Column & Window Sizing
+    // ═══════════════════════════════════════
+
+    // Cycle through preset column widths
+    Super+R { switch-preset-column-width; }
+
+    // Cycle through preset window heights
+    Super+Alt+R { switch-preset-window-height; }
+
+    // Reset window height to auto
+    Super+Alt+Shift+R { reset-window-height; }
+
+    // Shrink/grow column width by 10%
+    Super+Minus { set-column-width "-10%"; }
+    Super+Equal { set-column-width "+10%"; }
+
+    // Group/ungroup windows into a column
+    Super+BracketLeft  { consume-or-expel-window-left; }
+    Super+BracketRight { consume-or-expel-window-right; }
+
+    // Move window up/down within a column
+    Super+Shift+Up   { move-window-up; }
+    Super+Shift+Down { move-window-down; }
+
+    // ═══════════════════════════════════════
+    // Screenshots
+    // ═══════════════════════════════════════
+
+    // Screenshot entire screen
+    Print      { screenshot-screen; }
+
+    // Screenshot focused window only
+    Ctrl+Print { screenshot-window; }
+
+    // Interactive region screenshot
+    Alt+Print  { screenshot; }
+
+    // ═══════════════════════════════════════
+    // Volume  (wpctl)
+    // ═══════════════════════════════════════
+
+    // Raise output volume by 10%
+    XF86AudioRaiseVolume allow-inhibiting=false { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+
+    // Lower output volume by 10%
+    XF86AudioLowerVolume allow-inhibiting=false { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+
+    // Toggle output mute
+    XF86AudioMute        allow-inhibiting=false { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+
+    // Toggle microphone mute
+    XF86AudioMicMute     allow-inhibiting=false { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    // ═══════════════════════════════════════
+    // Brightness  (brightnessctl)
+    // ═══════════════════════════════════════
+
+    // Increase screen brightness by 10%
+    XF86MonBrightnessUp   allow-inhibiting=false { spawn "brightnessctl" "set" "+10%"; }
+
+    // Decrease screen brightness by 10%
+    XF86MonBrightnessDown allow-inhibiting=false { spawn "brightnessctl" "set" "10%-"; }
+
+    // ═══════════════════════════════════════
+    // Media  (playerctl)
+    // ═══════════════════════════════════════
+
+    // Play / pause media
+    XF86AudioPlay  allow-inhibiting=false { spawn "playerctl" "play-pause"; }
+
+    // Pause media
+    XF86AudioPause allow-inhibiting=false { spawn "playerctl" "pause"; }
+
+    // Next track
+    XF86AudioNext  allow-inhibiting=false { spawn "playerctl" "next"; }
+
+    // Previous track
+    XF86AudioPrev  allow-inhibiting=false { spawn "playerctl" "previous"; }
+
+    // ═══════════════════════════════════════
+    // Mouse — Workspace Scroll
+    // ═══════════════════════════════════════
+
+    // Scroll down = next workspace
+    Super+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+
+    // Scroll up = previous workspace
+    Super+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+
+    // Ctrl+scroll = move column to workspace
+    Super+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+    Super+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+    // ═══════════════════════════════════════
+    // Mouse — Column Scroll
+    // ═══════════════════════════════════════
+
+    // Horizontal scroll = focus column
+    Super+WheelScrollRight { focus-column-right; }
+    Super+WheelScrollLeft  { focus-column-left; }
+
+    // Ctrl+horizontal scroll = move column
+    Super+Ctrl+WheelScrollRight { move-column-right; }
+    Super+Ctrl+WheelScrollLeft  { move-column-left; }
+
+    // Shift+vertical scroll = focus column (alternative)
+    Super+Shift+WheelScrollDown { focus-column-right; }
+    Super+Shift+WheelScrollUp   { focus-column-left; }
+
+    // Ctrl+Shift+vertical scroll = move column
+    Super+Ctrl+Shift+WheelScrollDown { move-column-right; }
+    Super+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+
+    // ═══════════════════════════════════════
+    // Scratchpad (Niri native)
+    // ═══════════════════════════════════════
+
+    // Move focused window to scratchpad
+    Super+Comma { spawn "bash" "-c" "$XDG_CONFIG_HOME/niri/scripts/niri-scratch.sh move"; }
+
+    // Toggle scratchpad window visibility
+    Super+Alt+Comma { spawn "bash" "-c" "$XDG_CONFIG_HOME/niri/scripts/niri-scratch.sh toggle"; }
+}

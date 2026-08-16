@@ -1,0 +1,179 @@
+# Starship — starship.toml
+# Abhijeet - Retro BBS / Old School Amber
+# Docs: https://starship.rs/config/
+
+# =============================================================================
+# Prompt Layout
+# =============================================================================
+format = """
+[┌─](bold c4)\
+$os\
+$directory\
+$git_branch\
+$git_status\
+$git_state\
+$python\
+$rust\
+$java\
+$nodejs\
+$golang\
+$docker_context\
+$cmd_duration\
+\n[└─](bold c4)$character"""
+
+right_format = """
+$status\
+$jobs\
+$time"""
+
+# format = """
+# [╭](bold overlay1) \
+# $os\
+# $directory\
+# $git_branch\
+# $git_status\
+# $git_state\
+# $python\
+# $rust\
+# $java\
+# $nodejs\
+# $golang\
+# $docker_context\
+# $cmd_duration\
+# \n$character"""
+
+# right_format = """
+# $status\
+# $jobs"""
+
+add_newline = true
+command_timeout = 2000
+
+# Palette will be appended by theme-changer.sh
+palette = "active"
+
+
+# =============================================================================
+# Character (prompt symbol)
+# =============================================================================
+[character]
+format = "[$symbol](bold c4) "
+success_symbol = "[█](bold c4)"
+error_symbol = "[!](bold c1)"
+vimcmd_symbol = "[V](bold c4)"     # shows when in vi normal mode
+
+# =============================================================================
+# OS — small distro icon on the left
+# =============================================================================
+[os]
+disabled = false
+format = "[$symbol](fg:c4) "
+
+[os.symbols]
+Arch = "A"
+Ubuntu = "U"
+Linux = "L"
+
+# =============================================================================
+# Directory
+# =============================================================================
+[directory]
+format = "[$path](bold c4) "
+truncation_length = 3
+truncation_symbol = ".../"
+fish_style_pwd_dir_length = 1
+read_only = " [RO]"
+read_only_style = "bold red"
+
+[directory.substitutions]
+"Documents" = "DOC"
+"Downloads" = "DL"
+"Music" = "MUS"
+"Pictures" = "PIC"
+"Projects" = "PRJ"
+"Desktop" = "DSK"
+".config" = "CFG"
+
+# =============================================================================
+# Git
+# =============================================================================
+[git_branch]
+format = "[ @$branch](bold c4) "
+symbol = "G:"
+
+[git_status]
+format = "([$all_status$ahead_behind](fg:c4) )"
+conflicted = "!"
+ahead = "++"
+behind = "--"
+diverged = "<>"
+up_to_date = "OK"
+untracked = "?"
+stashed = "$"
+modified = "*"
+staged = "+"
+renamed = ">>"
+deleted = "-"
+
+[git_state]
+format = "[$state($progress_current/$progress_total)](bold yellow) "
+
+# =============================================================================
+# Time
+# =============================================================================
+[time]
+disabled = false
+format = "[$time](bold c7) "
+time_format = "%T"
+
+# =============================================================================
+# Command Duration
+# =============================================================================
+[cmd_duration]
+min_time = 2000                           # show only if command took > 2s
+format = "t:[$duration](bold c3) "
+show_notifications = false
+
+# =============================================================================
+# Status (right prompt — exit code)
+# =============================================================================
+[status]
+disabled = false
+format = "[$symbol$status](bold red) "
+symbol = "E:"
+map_symbol = true
+
+# =============================================================================
+# Jobs (right prompt — background jobs)
+# =============================================================================
+[jobs]
+disabled = false
+format = "[$symbol$number](bold blue) "
+symbol = "J:"
+number_threshold = 1
+
+# =============================================================================
+# Languages — your stack
+
+[python]
+symbol = "Py:"
+format = "[($virtualenv )](bold yellow) "
+detect_files = ["requirements.txt", "pyproject.toml", "*.py"]
+
+[rust]
+symbol = "Rs:"
+format = "[$symbol($version)](bold red) "
+
+[nodejs]
+symbol = "Js:"
+format = "[$symbol($version)](bold green) "
+detect_files = ["package.json"]
+
+[golang]
+symbol = "Go:"
+format = "[$symbol($version)](bold cyan) "
+
+[docker_context]
+symbol = "Dk:"
+format = "[$symbol$context](bold blue) "
+only_with_files = true

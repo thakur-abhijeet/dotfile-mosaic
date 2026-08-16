@@ -1,0 +1,41 @@
+// ╔══════════════════════════════════════════╗
+// ║         Niri — execs.kdl                 ║
+// ║         Abhijeet · Ubuntu + Niri         ║
+// ╚══════════════════════════════════════════╝
+// Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Overview
+
+// ═══════════════════════════════════════════
+// System Services  (critical — start first)
+// ═══════════════════════════════════════════
+
+// Polkit agent — graphical auth prompts (sudo GUI, package managers)
+spawn-at-startup "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
+spawn-at-startup "lxqt-policykit-agent"
+
+// Wayland portal + systemd environment sync
+// Required for: screen sharing, file pickers, xdg-desktop-portal, theming
+spawn-at-startup "dbus-update-activation-environment" "--systemd" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP=niri"
+spawn-at-startup "systemctl" "--user" "import-environment" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
+
+// ═══════════════════════════════════════════
+// Wallpaper
+// ═══════════════════════════════════════════
+
+spawn-at-startup "awww-daemon"
+spawn-at-startup "vicinae server & disown"
+// ═══════════════════════════════════════════
+// Notifications
+// ═══════════════════════════════════════════
+
+spawn-at-startup "swaync"
+//spawn-at-startup "waybar"
+
+// ═══════════════════════════════════════════
+// System Tray
+// ═══════════════════════════════════════════
+
+// Network Manager applet
+// spawn-at-startup "nm-applet" "--indicator"
+
+// Bluetooth applet
+// spawn-at-startup "blueman-applet"
